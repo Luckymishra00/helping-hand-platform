@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="featuredCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for i, f in enumerate(featured) %}
+      <div class="carousel-item {% if i==0 %}active{% endif %}">
+        <div class="d-flex hero-slide align-items-center p-4 rounded">
+          <div class="flex-grow-1">
+            <h2 class="fw-bold">{{ f['title'] }}</h2>
+            <p class="lead">{{ f['description'] }}</p>
+            <a class="btn btn-light" href="{{ url_for('task_detail', task_id=f['id']) }}">View Task</a>
+          </div>
+          <div class="text-end ms-3">
+            <div class="display-6 fw-bold">₹{{ f['budget'] }}</div>
+            <small class="text-muted">By {{ f['poster_name'] or 'Community' }}</small>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-8">
+    <form action="{{ url_for('search') }}" class="row g-2">
+      <div class="col-md-6"><input class="form-control" name="q" placeholder="Search tasks or keywords"></div>
+      <div class="col-md-3"><input class="form-control" name="minb" placeholder="Min budget (₹)"></div>
+      <div class="col-md-3"><input class="form-control" name="maxb" placeholder="Max budget (₹)"></div>
+      <div class="col-md-3 mt-2"><input class="form-control" name="skill" placeholder="Skill filter"></div>
+      <div class="col-md-2 mt-2"><button class="btn btn-primary w-100">Search</button></div>
+    </form>
+    <h4 class="mt-4">Available Tasks</h4>
+    <div class="row">
+      {% for t in tasks %}
+        <div class="col-md-6">
+          <div class="card mb-3 p-3 hover-card">
+            <div class="d-flex justify-content-between">
+              <h5>{{ t['title'] }}</h5>
+              <div class="fw-bold">₹{{ t['budget'] }}</div>
+            </div>
+            <p>{{ t['description'] }}</p>
+            <p class="small text-muted">By: {{ t['poster_name'] or 'Unknown' }}</p>
+            <a class="btn btn-sm btn-primary" href="{{ url_for('task_detail', task_id=t['id']) }}">View</a>
+            <a class="btn btn-sm btn-success" href="{{ url_for('hire', task_id=t['id']) }}">Hire</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3 mb-3">
+      <h5>Community stories</h5>
+      {% for s in stories %}
+        <div class="d-flex align-items-center mb-2">
+          <div class="avatar me-2">{{ s['name'][0]|upper }}</div>
+          <div>
+            <div class="fw-bold">{{ s['name'] }}</div>
+            <small class="text-muted">Skill: {{ s['skills'] or 'Various' }}</small>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="card p-3">
+      <h5>Quick actions</h5>
+      <a class="d-block mb-1" href="{{ url_for('post_task') }}">Post a task</a>
+      <a class="d-block" href="{{ url_for('register') }}">Register as worker</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

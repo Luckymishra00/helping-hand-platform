@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card p-4">
+      <h3>Post a Task</h3>
+      <form method="post">
+        <div class="mb-3"><label>Title</label><input class="form-control" name="title" required></div>
+        <div class="mb-3"><label>Description</label><textarea class="form-control" name="description"></textarea></div>
+        <div class="mb-3"><label>Budget (₹)</label><input class="form-control" name="budget"></div>
+        <button class="btn btn-primary">Post Task</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

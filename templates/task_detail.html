@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-3">
+  <div class="d-flex justify-content-between">
+    <h4>{{ task['title'] }}</h4>
+    <div class="fw-bold">₹{{ task['budget'] }}</div>
+  </div>
+  <p>{{ task['description'] }}</p>
+  <p>Posted by: <a href="{{ url_for('profile', user_id=task['user_id']) }}">{{ task['poster_name'] or 'Unknown' }}</a></p>
+  <a class="btn btn-primary" href="{{ url_for('hire', task_id=task['id']) }}">Hire for this task</a>
+</div>
+{% endblock %}

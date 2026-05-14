@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Notifications</h3>
+<ul class="list-group">
+  {% for n in notes %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>{{ n['message'] }} <div class="small text-muted">{{ n['created_at'] }}</div></div>
+      <div>
+        {% if not n['is_read'] %}<a class="btn btn-sm btn-outline-primary" href="{{ url_for('mark_read', nid=n['id']) }}">Mark read</a>{% else %}<span class="text-muted">Read</span>{% endif %}
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

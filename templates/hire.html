@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Hire for: {{ task['title'] }}</h3>
+<p>{{ task['description'] }}</p>
+<form method="post">
+  <div class="mb-3">
+    <label>Select worker</label>
+    <select name="hired_user" class="form-control">
+      {% for w in workers %}
+        <option value="{{ w['id'] }}">{{ w['name'] }} — {{ w['skills'] or 'Various' }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button class="btn btn-success">Send Hire Request</button>
+</form>
+{% endblock %}
